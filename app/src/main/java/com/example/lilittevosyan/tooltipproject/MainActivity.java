@@ -23,21 +23,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+                tooltipPopup.dismiss();
             }
         });
         tooltipPopup = new ToolTipLinear(this, null, rootView);
         tooltipPopup.setTitle("goodByeTooltip");
+        tooltipPopup.setDismissFromOutside(true);
 
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tooltipPopup.setArrowPosition(ToolTipLinear.ARROW_POSITION_TOP_RIGHT);
                 tooltipPopup.show();
             }
         });
-
-
-
     }
 
 }

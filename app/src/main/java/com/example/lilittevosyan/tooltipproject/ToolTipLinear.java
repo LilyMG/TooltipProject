@@ -40,7 +40,30 @@ public class ToolTipLinear extends LinearLayout {
     private View anchorView;
     private ImageView arrow;
     private int arrowPosition = 0;
+    private boolean dismissFromOutside = false;
 
+    public void setDismissFromOutside(boolean dismissFromOutside) {
+        this.dismissFromOutside = dismissFromOutside;
+    }
+
+    private void correctDismissFromOutside() {
+        if (dismissFromOutside) {
+            parentView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismiss();
+                }
+            });
+
+        } else {
+        }
+
+
+    }
+
+    public void dismiss() {
+        parentView.removeView(this);
+    }
 
     public void setArrowPosition(int arrowPosition) {
         this.arrowPosition = arrowPosition;
@@ -69,6 +92,7 @@ public class ToolTipLinear extends LinearLayout {
     public void show() {
         correctAnchorView();
         correctArrowPosition();
+        correctDismissFromOutside();
     }
 
 
@@ -80,27 +104,27 @@ public class ToolTipLinear extends LinearLayout {
                 arrow.setVisibility(View.GONE);
                 break;
             case 1:
-                layoutParams.gravity = Gravity.TOP|Gravity.LEFT;
+                layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
                 arrow.setLayoutParams(layoutParams);
                 break;
             case 2:
-                layoutParams.gravity = Gravity.TOP|Gravity.CENTER_HORIZONTAL;
+                layoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
                 arrow.setLayoutParams(layoutParams);
                 break;
             case 3:
-                layoutParams.gravity = Gravity.TOP|Gravity.RIGHT;
+                layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
                 arrow.setLayoutParams(layoutParams);
                 break;
             case 4:
-                layoutParams.gravity = Gravity.BOTTOM|Gravity.LEFT;
+                layoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
                 arrow.setLayoutParams(layoutParams);
                 break;
             case 5:
-                layoutParams.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
+                layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
                 arrow.setLayoutParams(layoutParams);
                 break;
             case 6:
-                layoutParams.gravity = Gravity.BOTTOM|Gravity.RIGHT;
+                layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
                 arrow.setLayoutParams(layoutParams);
                 break;
         }
@@ -141,9 +165,4 @@ public class ToolTipLinear extends LinearLayout {
     public void setTitle(String title) {
         titleTextView.setText(title);
     }
-
-
-    public void setTooltipPosition() {
-    }
-
 }
