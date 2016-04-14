@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,12 +19,19 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.activity_main, null);
         setContentView(rootView);
+        rootView.findViewById(R.id.test_press_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
         tooltipPopup = new ToolTipLinear(this, null, rootView);
         tooltipPopup.setTitle("goodByeTooltip");
 
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tooltipPopup.setArrowPosition(ToolTipLinear.ARROW_POSITION_TOP_RIGHT);
                 tooltipPopup.show();
             }
         });
