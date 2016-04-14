@@ -18,18 +18,16 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.activity_main, null);
         setContentView(rootView);
-        bottomPanelItemPopup = new ToolTipLinear(this, null);
+        bottomPanelItemPopup = new ToolTipLinear(this, null, rootView);
         bottomPanelItemPopup.setTitle("goodByeTooltip");
 
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                bottomPanelItemPopup.setVisibility(View.VISIBLE);
+                rootView.addView(bottomPanelItemPopup);
                 bottomPanelItemPopup.setX(view.getX());
                 bottomPanelItemPopup.setY(view.getY());
-                rootView.addView(bottomPanelItemPopup);
-
+                bottomPanelItemPopup.setVisibility(View.VISIBLE);
             }
         });
 
