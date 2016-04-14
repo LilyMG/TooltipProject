@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ToolTipStyle">
+        <attr name="toolTipShowDuration" format="integer"/>
+        <attr name="toolTipArrowDirection">
+            <enum name="none" value="0" />
+            <enum name="top" value="1" />
+            <enum name="bottom" value="2" />
+        </attr>
+        <attr name="toolTipTouchOutsideEnabled" format="boolean"/>
+        <attr name="tootTipText" format="string"/>
+    </declare-styleable>
+
+
+</resources>
