@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ToolTipLinear bottomPanelItemPopup;
+    private ToolTipLinear tooltipPopup;
     private ViewGroup rootView;
 
 
@@ -18,27 +18,16 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.activity_main, null);
         setContentView(rootView);
-        bottomPanelItemPopup = new ToolTipLinear(this, null, rootView);
-        bottomPanelItemPopup.setTitle("goodByeTooltip");
+        tooltipPopup = new ToolTipLinear(this, null, rootView);
+        tooltipPopup.setTitle("goodByeTooltip");
 
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bottomPanelItemPopup.setAnchorView(view);
-                bottomPanelItemPopup.show();
+                tooltipPopup.show();
             }
         });
 
-
-//        bottomPanelItemPopup = new TooltipPopup(this, null);
-//        bottomPanelItemPopup.setTitle("goodByeTooltip");
-//
-//        findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bottomPanelItemPopup.showAsDropDown(findViewById(R.id.anchor));
-//            }
-//        });
 
 
     }

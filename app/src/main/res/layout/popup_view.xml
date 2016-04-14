@@ -5,7 +5,8 @@
     android:background="@android:color/transparent">
 
     <ImageView
-        android:id="@+id/arrow_top"
+        android:visibility="gone"
+        android:id="@+id/arrow"
         android:layout_width="wrap_content"
         android:layout_height="10dp"
         android:src="@android:drawable/arrow_up_float" />
@@ -18,13 +19,6 @@
         android:layout_marginTop="8dp"
         android:background="@android:color/white"
         android:text="tooltipText" />
-
-    <ImageView
-        android:id="@+id/arrow_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:layout_gravity="bottom"
-        android:src="@android:drawable/arrow_down_float" />
 
 
 </FrameLayout>

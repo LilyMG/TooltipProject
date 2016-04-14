@@ -7,11 +7,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -33,6 +35,14 @@ public class ToolTipLinear extends LinearLayout {
         initViews();
     }
 
+    public ToolTipLinear(Context context, AttributeSet attrs, ViewGroup parentView, View anchorView) {
+        super(context, attrs);
+        this.context = context;
+        this.parentView = parentView;
+        this.anchorView = anchorView;
+        initViews();
+    }
+
     public void setAnchorView(View anchorView) {
         this.anchorView = anchorView;
     }
@@ -42,8 +52,13 @@ public class ToolTipLinear extends LinearLayout {
             setX(anchorView.getRight());
             setY(anchorView.getBottom());
         } else {
-            setX(120);
-            setY(120);
+            if (parentView instanceof RelativeLayout) {
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                setLayoutParams(params);
+            } else {
+                setGravity(Gravity.CENTER);
+            }
         }
         setVisibility(View.VISIBLE);
     }
