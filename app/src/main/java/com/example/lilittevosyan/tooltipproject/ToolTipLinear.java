@@ -24,6 +24,7 @@ public class ToolTipLinear extends LinearLayout {
     private LayoutInflater layoutInflater;
     private ViewGroup rootView;
     private ViewGroup parentView;
+    private View anchorView = null;
 
     public ToolTipLinear(Context context, AttributeSet attrs, ViewGroup parentView) {
         super(context, attrs);
@@ -32,20 +33,40 @@ public class ToolTipLinear extends LinearLayout {
         initViews();
     }
 
+    public void setAnchorView(View anchorView) {
+        this.anchorView = anchorView;
+    }
+
+    public void show() {
+        if (anchorView != null) {
+            setX(anchorView.getRight());
+            setY(anchorView.getBottom());
+        } else {
+            setX(120);
+            setY(120);
+        }
+        setVisibility(View.VISIBLE);
+    }
+
     private void initViews() {
+        setVisibility(View.GONE);
+        parentView.addView(this);
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.popup_view, null);
-        titleTextView = (TextView) rootView.findViewById(R.id.tooltip_title);
         addView(rootView);
+        titleTextView = (TextView) rootView.findViewById(R.id.tooltip_title);
         LayoutTransition lt = new LayoutTransition();
         lt.enableTransitionType(LayoutTransition.CHANGE_DISAPPEARING);
-        lt.setDuration(2500);
+        lt.setDuration(500);
         parentView.setLayoutTransition(lt);
-        setVisibility(View.GONE);
     }
 
     public void setTitle(String title) {
         titleTextView.setText(title);
+    }
+
+
+    public void setTooltipPosition() {
     }
 
 }

@@ -24,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rootView.addView(bottomPanelItemPopup);
-                bottomPanelItemPopup.setX(view.getX());
-                bottomPanelItemPopup.setY(view.getY());
-                bottomPanelItemPopup.setVisibility(View.VISIBLE);
+                bottomPanelItemPopup.setAnchorView(view);
+                bottomPanelItemPopup.show();
             }
         });
 
