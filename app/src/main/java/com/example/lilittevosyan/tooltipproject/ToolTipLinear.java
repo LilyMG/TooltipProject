@@ -146,8 +146,8 @@ public class ToolTipLinear extends LinearLayout {
                     setY(anchorView.getY() - height);
                     break;
                 case TOOLTIP_POSITION_DOWN:
-                    setX(anchorView.getX() + 50);
-                    setY(anchorView.getY() + height );  //TODO add anchorView height
+                    setX(anchorView.getX());
+                    setY(anchorView.getY() + anchorView.getHeight());
                     break;
                 default:
                     throw new UnsupportedOperationException("position of popup is not specified, use  TOOLTIP_POSITION_UP or TOOLTIP_POSITION_DOWN");
