@@ -23,13 +23,16 @@ import android.widget.TextView;
  */
 public class ToolTipLinear extends LinearLayout {
 
-    public static int ARROW_POSITION_NONE = 0;
-    public static int ARROW_POSITION_TOP_LEFT = 1;
-    public static int ARROW_POSITION_TOP_CENTER = 2;
-    public static int ARROW_POSITION_TOP_RIGHT = 3;
-    public static int ARROW_POSITION_BOTTOM_LEFT = 4;
-    public static int ARROW_POSITION_BOTTOM_CENTER = 5;
-    public static int ARROW_POSITION_BOTTOM_RIGHT = 6;
+    public static final int ARROW_POSITION_NONE = 0;
+    public static final int ARROW_POSITION_TOP_LEFT = 1;
+    public static final int ARROW_POSITION_TOP_CENTER = 2;
+    public static final int ARROW_POSITION_TOP_RIGHT = 3;
+    public static final int ARROW_POSITION_BOTTOM_LEFT = 4;
+    public static final int ARROW_POSITION_BOTTOM_CENTER = 5;
+    public static final int ARROW_POSITION_BOTTOM_RIGHT = 6;
+
+    public static final int TOOLTIP_POSITION_UP = 7;
+    public static final int TOOLTIP_POSITION_DOWN = 8;
 
 
     private TextView titleTextView;
@@ -40,7 +43,13 @@ public class ToolTipLinear extends LinearLayout {
     private View anchorView;
     private ImageView arrow;
     private int arrowPosition = 0;
+    private int tooltipPosition = 0;
     private boolean dismissFromOutside = false;
+    private int height;
+
+    public void setTooltipPosition(int tooltipPosition) {
+        this.tooltipPosition = tooltipPosition;
+    }
 
     public void setDismissFromOutside(boolean dismissFromOutside) {
         this.dismissFromOutside = dismissFromOutside;
@@ -54,11 +63,7 @@ public class ToolTipLinear extends LinearLayout {
                     dismiss();
                 }
             });
-
-        } else {
         }
-
-
     }
 
     public void dismiss() {
@@ -100,30 +105,30 @@ public class ToolTipLinear extends LinearLayout {
         arrow.setVisibility(View.VISIBLE);
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) arrow.getLayoutParams();
         switch (arrowPosition) {
-            case 0:
+            case ARROW_POSITION_NONE:
                 arrow.setVisibility(View.GONE);
                 break;
-            case 1:
+            case ARROW_POSITION_TOP_LEFT:
                 layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
                 arrow.setLayoutParams(layoutParams);
                 break;
-            case 2:
+            case ARROW_POSITION_TOP_CENTER:
                 layoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
                 arrow.setLayoutParams(layoutParams);
                 break;
-            case 3:
+            case ARROW_POSITION_TOP_RIGHT:
                 layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
                 arrow.setLayoutParams(layoutParams);
                 break;
-            case 4:
+            case ARROW_POSITION_BOTTOM_LEFT:
                 layoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
                 arrow.setLayoutParams(layoutParams);
                 break;
-            case 5:
+            case ARROW_POSITION_BOTTOM_CENTER:
                 layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
                 arrow.setLayoutParams(layoutParams);
                 break;
-            case 6:
+            case ARROW_POSITION_BOTTOM_RIGHT:
                 layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
                 arrow.setLayoutParams(layoutParams);
                 break;
@@ -134,8 +139,20 @@ public class ToolTipLinear extends LinearLayout {
 
     private void correctAnchorView() {
         if (anchorView != null) {
-            setX(anchorView.getRight());
-            setY(anchorView.getBottom());
+            //TODO make sure setX and setY are positive values
+            switch (tooltipPosition) {
+                case TOOLTIP_POSITION_UP:
+                    setX(anchorView.getX());
+                    setY(anchorView.getY() - height);
+                    break;
+                case TOOLTIP_POSITION_DOWN:
+                    setX(anchorView.getX() + 50);
+                    setY(anchorView.getY() + height );  //TODO add anchorView height
+                    break;
+                default:
+                    throw new UnsupportedOperationException("position of popup is not specified, use  TOOLTIP_POSITION_UP or TOOLTIP_POSITION_DOWN");
+            }
+
         } else {
             if (parentView instanceof RelativeLayout) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -160,6 +177,8 @@ public class ToolTipLinear extends LinearLayout {
         lt.enableTransitionType(LayoutTransition.CHANGE_DISAPPEARING);
         lt.setDuration(500);
         parentView.setLayoutTransition(lt);
+        measure(0, 0);
+        height = getMeasuredHeight();
     }
 
     public void setTitle(String title) {
