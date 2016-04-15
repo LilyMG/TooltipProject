@@ -2,6 +2,7 @@ package com.example.lilittevosyan.tooltipproject;
 
 import android.animation.LayoutTransition;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -98,6 +99,11 @@ public class ToolTipLinear extends LinearLayout {
         correctAnchorView();
         correctArrowPosition();
         correctDismissFromOutside();
+        postDelayed(new Runnable() {
+            public void run() {
+                dismiss();
+            }
+        }, 3000);
     }
 
 
