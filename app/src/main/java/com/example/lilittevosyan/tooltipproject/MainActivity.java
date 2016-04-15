@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         tooltipPopup.setTitle("goodByeTooltip");
         tooltipPopup.setDismissFromOutside(true);
         tooltipPopup.setAnchorView(findViewById(R.id.anchor));
-        tooltipPopup.setTooltipPosition(ToolTipLinear.TOOLTIP_POSITION_UP);
+        tooltipPopup.setTooltipPosition(ToolTipLinear.TOOLTIP_POSITION_DOWN);
 
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override

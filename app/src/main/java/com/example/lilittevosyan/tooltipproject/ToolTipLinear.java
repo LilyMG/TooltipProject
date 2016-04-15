@@ -47,6 +47,7 @@ public class ToolTipLinear extends LinearLayout {
     private int tooltipPosition = 0;
     private boolean dismissFromOutside = false;
     private int height;
+    private int width;
 
     public void setTooltipPosition(int tooltipPosition) {
         this.tooltipPosition = tooltipPosition;
@@ -145,14 +146,24 @@ public class ToolTipLinear extends LinearLayout {
 
     private void correctAnchorView() {
         if (anchorView != null) {
+            measure(0, 0);
+            width = getMeasuredWidth();
             //TODO make sure setX and setY are positive values
             switch (tooltipPosition) {
                 case TOOLTIP_POSITION_UP:
-                    setX(anchorView.getX());
+                    if (anchorView.getX() + width > parentView.getWidth()) {
+                        setX(parentView.getWidth() - width);
+                    } else {
+                        setX(anchorView.getX());
+                    }
                     setY(anchorView.getY() - height);
                     break;
                 case TOOLTIP_POSITION_DOWN:
-                    setX(anchorView.getX());
+                    if (anchorView.getX() + width > parentView.getWidth()) {
+                        setX(parentView.getWidth() - width);
+                    } else {
+                        setX(anchorView.getX());
+                    }
                     setY(anchorView.getY() + anchorView.getHeight());
                     break;
                 default:
@@ -185,6 +196,7 @@ public class ToolTipLinear extends LinearLayout {
         parentView.setLayoutTransition(lt);
         measure(0, 0);
         height = getMeasuredHeight();
+        width = getMeasuredWidth();
     }
 
     public void setTitle(String title) {
