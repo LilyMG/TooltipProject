@@ -1,11 +1,7 @@
 package com.example.lilittevosyan.tooltipproject;
 
 import android.animation.LayoutTransition;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -15,14 +11,13 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
  * Created by LilitTevosyan on 4/14/16.
  */
-public class ToolTipLinear extends LinearLayout {
+public class TooltipView extends LinearLayout {
 
     public static final int ARROW_POSITION_NONE = 0;
     public static final int ARROW_POSITION_TOP_LEFT = 1;
@@ -77,14 +72,14 @@ public class ToolTipLinear extends LinearLayout {
     }
 
 
-    public ToolTipLinear(Context context, AttributeSet attrs, ViewGroup parentView) {
+    public TooltipView(Context context, AttributeSet attrs, ViewGroup parentView) {
         super(context, attrs);
         this.context = context;
         this.parentView = parentView;
         initViews();
     }
 
-    public ToolTipLinear(Context context, AttributeSet attrs, ViewGroup parentView, View anchorView) {
+    public TooltipView(Context context, AttributeSet attrs, ViewGroup parentView, View anchorView) {
         super(context, attrs);
         this.context = context;
         this.parentView = parentView;
@@ -94,6 +89,18 @@ public class ToolTipLinear extends LinearLayout {
 
     public void setAnchorView(View anchorView) {
         this.anchorView = anchorView;
+    }
+
+    public void shAtPosition(int x, int y){
+        correctDismissFromOutside();
+        setX(x);
+        setY(y);
+        setVisibility(View.VISIBLE);
+        postDelayed(new Runnable() {
+            public void run() {
+                dismiss();
+            }
+        }, 3000);
     }
 
     public void show() {
@@ -186,12 +193,14 @@ public class ToolTipLinear extends LinearLayout {
         setVisibility(View.GONE);
         parentView.addView(this);
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        rootView = (ViewGroup) layoutInflater.inflate(R.layout.popup_view, null);
+        rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_tool_tip, null);
         addView(rootView);
         titleTextView = (TextView) rootView.findViewById(R.id.tooltip_title);
         arrow = (ImageView) rootView.findViewById(R.id.arrow);
         LayoutTransition lt = new LayoutTransition();
-        lt.enableTransitionType(LayoutTransition.CHANGE_DISAPPEARING);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            lt.enableTransitionType(LayoutTransition.CHANGE_DISAPPEARING);
+        }
         lt.setDuration(500);
         parentView.setLayoutTransition(lt);
         measure(0, 0);

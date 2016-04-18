@@ -4,21 +4,19 @@
     android:layout_height="wrap_content"
     android:background="@android:color/holo_purple">
 
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:src="@android:drawable/arrow_up_float" />
-
     <TextView
         android:id="@+id/tooltip_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
+        android:background="@android:color/white"
         android:text="tooltipText" />
 
-
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:src="@android:drawable/arrow_up_float"
+        android:visibility="visible" />
 </FrameLayout>

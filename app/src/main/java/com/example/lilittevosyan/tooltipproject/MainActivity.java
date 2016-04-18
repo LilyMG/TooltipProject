@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ToolTipLinear tooltipPopup;
+    private TooltipView tooltipPopup;
     private ViewGroup rootView;
 
 
@@ -26,16 +26,15 @@ public class MainActivity extends AppCompatActivity {
                 tooltipPopup.dismiss();
             }
         });
-        tooltipPopup = new ToolTipLinear(this, null, rootView);
+        tooltipPopup = new TooltipView(this, null, rootView);
         tooltipPopup.setTitle("goodByeTooltip");
         tooltipPopup.setDismissFromOutside(true);
-        tooltipPopup.setAnchorView(findViewById(R.id.anchor));
-        tooltipPopup.setTooltipPosition(ToolTipLinear.TOOLTIP_POSITION_DOWN);
+        tooltipPopup.setTooltipPosition(TooltipView.TOOLTIP_POSITION_DOWN);
 
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tooltipPopup.show();
+                tooltipPopup.showAtPosition(150,150);
             }
         });
     }
