@@ -91,7 +91,7 @@ public class TooltipView extends LinearLayout {
         this.anchorView = anchorView;
     }
 
-    public void shAtPosition(int x, int y){
+    public void showAtPosition(int x, int y){
         correctDismissFromOutside();
         setX(x);
         setY(y);
@@ -124,26 +124,32 @@ public class TooltipView extends LinearLayout {
                 break;
             case ARROW_POSITION_TOP_LEFT:
                 layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+                arrow.setImageResource(R.mipmap.ic_launcher);
                 arrow.setLayoutParams(layoutParams);
                 break;
             case ARROW_POSITION_TOP_CENTER:
                 layoutParams.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                arrow.setImageResource(R.mipmap.ic_launcher);
                 arrow.setLayoutParams(layoutParams);
                 break;
             case ARROW_POSITION_TOP_RIGHT:
                 layoutParams.gravity = Gravity.TOP | Gravity.RIGHT;
+                arrow.setImageResource(R.mipmap.ic_launcher);
                 arrow.setLayoutParams(layoutParams);
                 break;
             case ARROW_POSITION_BOTTOM_LEFT:
                 layoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
+                arrow.setImageResource(R.mipmap.ic_launcher);
                 arrow.setLayoutParams(layoutParams);
                 break;
             case ARROW_POSITION_BOTTOM_CENTER:
                 layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+                arrow.setImageResource(R.mipmap.ic_launcher);
                 arrow.setLayoutParams(layoutParams);
                 break;
             case ARROW_POSITION_BOTTOM_RIGHT:
                 layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+                arrow.setImageResource(R.mipmap.ic_launcher);
                 arrow.setLayoutParams(layoutParams);
                 break;
         }
@@ -155,27 +161,83 @@ public class TooltipView extends LinearLayout {
         if (anchorView != null) {
             measure(0, 0);
             width = getMeasuredWidth();
-            //TODO make sure setX and setY are positive values
-            switch (tooltipPosition) {
-                case TOOLTIP_POSITION_UP:
-                    if (anchorView.getX() + width > parentView.getWidth()) {
-                        setX(parentView.getWidth() - width);
-                    } else {
-                        setX(anchorView.getX());
-                    }
-                    setY(anchorView.getY() - height);
-                    break;
-                case TOOLTIP_POSITION_DOWN:
-                    if (anchorView.getX() + width > parentView.getWidth()) {
-                        setX(parentView.getWidth() - width);
-                    } else {
-                        setX(anchorView.getX());
-                    }
-                    setY(anchorView.getY() + anchorView.getHeight());
-                    break;
-                default:
-                    throw new UnsupportedOperationException("position of popup is not specified, use  TOOLTIP_POSITION_UP or TOOLTIP_POSITION_DOWN");
+            int[] location = new int[2];
+            anchorView.getLocationOnScreen(location);
+            int anchorX = location[0];
+            int anchorY = location[1];
+
+            ViewGroup.LayoutParams layoutParams;
+
+            if (getLayoutParams() instanceof FrameLayout.LayoutParams) {
+                layoutParams = getLayoutParams();
+                switch (tooltipPosition) {
+                    case TOOLTIP_POSITION_UP:
+                        if (anchorView.getX() + width > parentView.getWidth()) {
+                            ((FrameLayout.LayoutParams) layoutParams).setMargins(anchorX - width, anchorY - height, 0, 0);
+                        } else {
+                            ((FrameLayout.LayoutParams) layoutParams).setMargins(anchorX, anchorY - height, 0, 0);
+                        }
+                        break;
+                    case TOOLTIP_POSITION_DOWN:
+                        if (anchorView.getX() + width > parentView.getWidth()) {
+                            setX(parentView.getWidth() - width);
+                            ((FrameLayout.LayoutParams) layoutParams).setMargins(anchorX - width, anchorView.getHeight(), 0, 0);
+                        } else {
+                            setX(anchorView.getX());
+                            ((FrameLayout.LayoutParams) layoutParams).setMargins(anchorX, anchorView.getHeight(), 0, 0);
+                        }
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("position of popup is not specified, use  TOOLTIP_POSITION_UP or TOOLTIP_POSITION_DOWN");
+                }
+            } else if (getLayoutParams() instanceof RelativeLayout.LayoutParams) {
+                layoutParams = getLayoutParams();
+                switch (tooltipPosition) {
+                    case TOOLTIP_POSITION_UP:
+                        if (anchorView.getX() + width > parentView.getWidth()) {
+                            ((RelativeLayout.LayoutParams) layoutParams).setMargins(anchorX - width, anchorY - height, 0, 0);
+                        } else {
+                            ((RelativeLayout.LayoutParams) layoutParams).setMargins(anchorX, anchorY - height, 0, 0);
+                        }
+                        break;
+                    case TOOLTIP_POSITION_DOWN:
+                        if (anchorView.getX() + width > parentView.getWidth()) {
+                            setX(parentView.getWidth() - width);
+                            ((RelativeLayout.LayoutParams) layoutParams).setMargins(anchorX - width, anchorView.getHeight(), 0, 0);
+                        } else {
+                            setX(anchorView.getX());
+                            ((RelativeLayout.LayoutParams) layoutParams).setMargins(anchorX, anchorView.getHeight(), 0, 0);
+                        }
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("position of popup is not specified, use  TOOLTIP_POSITION_UP or TOOLTIP_POSITION_DOWN");
+                }
+            } else if (getLayoutParams() instanceof LinearLayout.LayoutParams) {
+                layoutParams = getLayoutParams();
+                switch (tooltipPosition) {
+                    case TOOLTIP_POSITION_UP:
+                        if (anchorView.getX() + width > parentView.getWidth()) {
+                            ((LinearLayout.LayoutParams) layoutParams).setMargins(anchorX - width, anchorY - height, 0, 0);
+                        } else {
+                            ((LinearLayout.LayoutParams) layoutParams).setMargins(anchorX, anchorY - height, 0, 0);
+                        }
+                        break;
+                    case TOOLTIP_POSITION_DOWN:
+                        if (anchorView.getX() + width > parentView.getWidth()) {
+                            setX(parentView.getWidth() - width);
+                            ((LinearLayout.LayoutParams) layoutParams).setMargins(anchorX - width, anchorView.getHeight(), 0, 0);
+                        } else {
+                            setX(anchorView.getX());
+                            ((LinearLayout.LayoutParams) layoutParams).setMargins(anchorX, anchorView.getHeight(), 0, 0);
+                        }
+                        break;
+                    default:
+                        throw new UnsupportedOperationException("position of popup is not specified, use  TOOLTIP_POSITION_UP or TOOLTIP_POSITION_DOWN");
+                }
             }
+
+
+            requestLayout();
 
         } else {
             if (parentView instanceof RelativeLayout) {

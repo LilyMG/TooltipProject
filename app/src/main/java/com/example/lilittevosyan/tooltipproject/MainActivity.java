@@ -26,15 +26,15 @@ public class MainActivity extends AppCompatActivity {
                 tooltipPopup.dismiss();
             }
         });
-        tooltipPopup = new TooltipView(this, null, rootView);
+        tooltipPopup = new TooltipView(this, null, (ViewGroup) findViewById(android.R.id.content));
         tooltipPopup.setTitle("goodByeTooltip");
         tooltipPopup.setDismissFromOutside(true);
-        tooltipPopup.setTooltipPosition(TooltipView.TOOLTIP_POSITION_DOWN);
-
+        tooltipPopup.setTooltipPosition(TooltipView.TOOLTIP_POSITION_UP);
+        tooltipPopup.setAnchorView(findViewById(R.id.anchor));
         findViewById(R.id.anchor).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tooltipPopup.showAtPosition(150,150);
+                tooltipPopup.show();
             }
         });
     }
